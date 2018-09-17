@@ -10,7 +10,7 @@ license: UNLICENSED
 
 targets:
   bhota_bot:
-    main: src/bhota_bot.cr
+    main: src/slib.cr
 
   amber:
     main: lib/amber/src/amber/cli.cr

@@ -34,11 +34,7 @@ Amber::Server.configure do
   end
 
   routes :api, "/api" do
-    post "/updates", TelegramController, :updates
     post "/auth", ApiController, :auth
-    post "/send_msg", ApiController, :send_msg
-    get  "/get_me", ApiController, :get_me 
-    get  "/get_chats", ApiController, :get_chats
   end
 
   routes :static do

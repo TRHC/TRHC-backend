@@ -1,6 +1,6 @@
 secret_key_base: QxJIFTIFDJSzENJhQ2nhc4npWRRDtuJoruyJxInUXFU
 port: 3000
-name: bhota_bot
+name: slib
 
 logging:
   severity: debug
@@ -21,7 +21,7 @@ process_count: 1
 # ssl_key_file:
 # ssl_cert_file:
 redis_url: "redis://localhost:6379"
-database_url: sqlite3:./db/bhota_bot_development.db
+database_url: sqlite3:./db/slib_development.db
 
 session:
   key: amber.session
