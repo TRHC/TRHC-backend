@@ -1,6 +1,8 @@
-# SLib backend
+# SolStat backend
 
 [![Amber Framework](https://img.shields.io/badge/using-amber_framework-orange.svg)](https://amberframework.org)
+[![Dependencies](https://img.shields.io/badge/dependencies-shards-brightgreen.svg)](https://github.com/2uo/SolStat-backend/blob/master/shard.yml)
+![Built with](https://img.shields.io/badge/built%20with-crystal-black.svg)
 
 This is a project written using [Amber](https://amberframework.org). Enjoy!
 
@@ -29,22 +31,8 @@ Getting an error message you need help decoding? Check the [Amber troubleshootin
 
 Using Docker? Please check [Amber Docker guides](https://docs.amberframework.org/amber/guides/docker).
 
-## Tests
-
-To run the test suite:
-
-```
-crystal spec
-```
-
-## Contributing
-
-1. Fork it ( https://github.com/your-github-user/bhota_bot/fork )
-2. Create your feature branch ( `git checkout -b my-new-feature` )
-3. Commit your changes ( `git commit -am 'Add some feature'` )
-4. Push to the branch ( `git push origin my-new-feature` )
-5. Create a new Pull Request
-
 ## Contributors
 
-- [your-github-user](https://github.com/your-github-user) Grig Betsan - creator, maintainer
+- [grig191](https://github.com/grig191) Grig Betsan - creator, maintainer
+- [2uo](https://github.com/2uo) - 2uo team
+
