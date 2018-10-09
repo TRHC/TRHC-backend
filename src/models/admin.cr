@@ -2,9 +2,8 @@ class Admin < Crecto::Model
   schema "admins" do
     field :name, String
     field :encrypted_password, String
-    field :bot_key, String
   end
-  validate_required [:encrypted_password, :bot_key]
+  validate_required [:encrypted_password]
 
   validates :name, 
     presence: true,

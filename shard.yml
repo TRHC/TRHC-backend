@@ -1,4 +1,4 @@
-name: bhota_bot
+name: slib
 version: 0.1.0
 
 authors:
@@ -9,7 +9,7 @@ crystal: 0.26.0
 license: UNLICENSED
 
 targets:
-  bhota_bot:
+  slib:
     main: src/slib.cr
 
   amber:
