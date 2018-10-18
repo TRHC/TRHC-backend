@@ -2,7 +2,7 @@ version: 1.0
 shards:
   amber:
     github: amberframework/amber
-    commit: ed73627cbab20624e93fb76182f7bb61c5c4627e
+    commit: 6400f7f02e2354ef944b06fd1eeff3c2153b3022
 
   amber_router:
     github: amberframework/amber-router
@@ -34,7 +34,7 @@ shards:
 
   email:
     github: arcage/crystal-email
-    version: 0.2.5
+    version: 0.3.0
 
   garnet_spec:
     github: amberframework/garnet-spec
@@ -84,13 +84,9 @@ shards:
     github: ysbaddaden/pool
     version: 0.2.3
 
-  popcorn:
-    github: icyleaf/popcorn
-    version: 0.1.1
-
   quartz_mailer:
     github: amberframework/quartz-mailer
-    version: 0.5.1
+    version: 0.5.2
 
   redis:
     github: stefanwille/crystal-redis
@@ -116,19 +112,7 @@ shards:
     github: mosop/string_inflection
     version: 0.2.1
 
-  tbot:
-    github: 4eam/tbot
-    commit: 3bb9512b4280d2d0671aaf6a5b75beca06831279
-
   teeplate:
     github: mosop/teeplate
     version: 0.6.1
-
-  telegram_bot:
-    github: hangyas/telegram_bot
-    commit: 722bab24876d13a661f513b09c4569916f7a81c1
-
-  totem:
-    github: icyleaf/totem
-    version: 0.4.0
 

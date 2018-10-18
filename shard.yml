@@ -18,7 +18,7 @@ targets:
 dependencies:
   amber:
     github: amberframework/amber
-    #version: 0.9.0
+    version: 0.9.0
     branch: master
 
   crecto:
@@ -40,10 +40,6 @@ dependencies:
   citrine-i18n:
     github: amberframework/citrine-i18n
     version: 0.3.2
-  
-  tbot:
-    github: 4eam/tbot
-    branch: adapt-to-web
 
   jwt:
     github: crystal-community/jwt
