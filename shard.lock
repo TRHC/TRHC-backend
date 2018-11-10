@@ -2,7 +2,7 @@ version: 1.0
 shards:
   amber:
     github: amberframework/amber
-    commit: 6400f7f02e2354ef944b06fd1eeff3c2153b3022
+    commit: 5feff4cc43f505230836f31e4154453c2cddcf9d
 
   amber_router:
     github: amberframework/amber-router
@@ -26,15 +26,15 @@ shards:
 
   crecto:
     github: Crecto/crecto
-    version: 0.9.0
+    version: 0.10.1
 
   db:
     github: crystal-lang/crystal-db
-    version: 0.5.0
+    version: 0.5.1
 
   email:
     github: arcage/crystal-email
-    version: 0.3.0
+    version: 0.3.2
 
   garnet_spec:
     github: amberframework/garnet-spec
@@ -50,11 +50,11 @@ shards:
 
   jasper_helpers:
     github: amberframework/jasper-helpers
-    version: 0.2.0
+    version: 0.2.1
 
   jwt:
     github: crystal-community/jwt
-    version: 0.3.0
+    version: 0.4.0
 
   kilt:
     github: jeromegn/kilt
@@ -70,7 +70,7 @@ shards:
 
   mysql:
     github: crystal-lang/crystal-mysql
-    version: 0.5.0
+    version: 0.5.1
 
   optarg:
     github: mosop/optarg
@@ -114,5 +114,5 @@ shards:
 
   teeplate:
     github: mosop/teeplate
-    version: 0.6.1
+    version: 0.7.0
 
