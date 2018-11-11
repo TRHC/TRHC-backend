@@ -42,6 +42,12 @@ dependencies:
   jwt:
     github: crystal-community/jwt
 
+  SolStat-parser:
+    github: 2uo/SolStat-parser
+
+  dispatch:
+    github: bmulvihill/dispatch
+
 development_dependencies:
  garnet_spec:
    github: amberframework/garnet-spec

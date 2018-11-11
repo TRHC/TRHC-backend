@@ -1,4 +1,15 @@
 class ApiController < ApplicationController
+  before_action do 
+    only [:upload, :info, :stats] do 
+      u = User.valid_session?(request.headers["Authorization"])
+      if u
+        @u = u.as(User)
+      else
+        halt!(401)
+      end
+    end
+  end
+
   def auth
     hash = {"token" => ""}
     if User.valid_session?(params["username"], params["password"])
@@ -14,14 +25,18 @@ class ApiController < ApplicationController
   end
 
   def info
-    if u = User.valid_session?(params["username"], params["password"])
-      hash = {success: true, user: u}
-      respond_with do
-        json hash.to_json
-      end
-    else
-      halt!(401, "Not authorized")
+    hash = {success: true, user: @u}
+    respond_with do
+      json hash.to_json
     end
+  end
+
+  def stats
+    hash = {} of String => Array(Record) | Record | Bool
+    ["month", "day", "hour"].each do |period|
+      hash[period] = Repo.get_by!(Record, period: period, user_id: @u.as(User).id)
+    end
+    pp hash
   end
 
   def register
@@ -43,6 +58,11 @@ class ApiController < ApplicationController
     else
       halt!(422, "Unprocessable entity")
     end
+  end
+
+  def upload
+    content = params.files["csv"].file.gets_to_end
+    CSVJob.dispatch(content, @u)
   end
 end
 

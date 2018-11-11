@@ -28,5 +28,14 @@ class User < Crecto::Model
     end
     false
   end
+
+  def self.valid_session?(token)
+    username, hash = token.split(";")
+    u = Repo.get_by(User, username: username)
+    u.try do |user|
+      return user if user.password == hash
+    end
+    false
+  end
 end
 

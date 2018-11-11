@@ -1,5 +1,9 @@
 version: 1.0
 shards:
+  SolStat-parser:
+    github: 2uo/SolStat-parser
+    commit: 7fb627dbe91485146de1c91eb81580aafdd8551a
+
   amber:
     github: amberframework/amber
     commit: 5feff4cc43f505230836f31e4154453c2cddcf9d
@@ -31,6 +35,10 @@ shards:
   db:
     github: crystal-lang/crystal-db
     version: 0.5.1
+
+  dispatch:
+    github: bmulvihill/dispatch
+    version: 0.1.0
 
   email:
     github: arcage/crystal-email

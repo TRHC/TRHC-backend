@@ -37,6 +37,8 @@ Amber::Server.configure do
     post "/auth", ApiController, :auth
     post "/register", ApiController, :register
     post "/info", ApiController, :info
+    post "/upload", ApiController, :upload
+    post "/stats", ApiController, :stats
   end
 
   routes :static do
