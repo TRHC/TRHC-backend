@@ -34,9 +34,11 @@ class ApiController < ApplicationController
   def stats
     hash = {} of String => Array(Record) | Record | Bool
     ["month", "day", "hour"].each do |period|
-      hash[period] = Repo.get_by!(Record, period: period, user_id: @u.as(User).id)
+      hash[period] = Repo.all(Record, Query.where(period: period, user_id: @u.as(User).id))
     end
-    pp hash
+    respond_with do 
+      json hash.to_json
+    end
   end
 
   def register
