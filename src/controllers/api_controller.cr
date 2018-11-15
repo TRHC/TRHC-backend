@@ -7,6 +7,8 @@ class ApiController < ApplicationController
       else
         halt!(401)
       end
+    rescue
+      halt!(401)
     end
   end
 
