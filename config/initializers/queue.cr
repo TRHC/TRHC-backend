@@ -12,6 +12,7 @@ class CSVJob
   def perform(content, user)
     csv = SolStat::Parser::SCSV.new(content)
     csv.parse_headers
+    m = Crecto::Multi.new
     csv.each_row do |row|
       r = Record.new
       r.unit = row[:unit]
@@ -19,7 +20,8 @@ class CSVJob
       r.amount = row[:value]
       r.start_date = row[:start_time]
       r.user = user
-      Repo.insert(r)
+      m.insert(r)
     end
+    Repo.transaction(m)
   end
 end
