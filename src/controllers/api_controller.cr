@@ -1,4 +1,6 @@
 class ApiController < ApplicationController
+  DATES = ["month", "day", "hour"]
+
   before_action do 
     only [:upload, :info, :stats] do 
       u = User.valid_session?(request.headers["Authorization"])
@@ -7,6 +9,8 @@ class ApiController < ApplicationController
       else
         halt!(401)
       end
+    rescue
+      halt!(401)
     end
   end
 
@@ -32,10 +36,15 @@ class ApiController < ApplicationController
   end
 
   def stats
-    hash = {} of String => Array(Record) | Record | Bool
-    ["month", "day", "hour"].each do |period|
-      hash[period] = Repo.all(Record, Query.where(period: period, user_id: @u.as(User).id))
+    hash = {} of String => Array(String) | Array(Array(Float64) | Array(String)) | Array(String) | Record | Bool
+    #hash = JSON::Any.new
+    DATES.each do |period|
+      pr = Repo.all(Record, Query.where(period: period, user_id: @u.as(User).id))
+      dates   = pr.map {|r| r.start_date.to_s}
+      amounts = pr.map {|r| r.amount.as(Float64)}
+      hash[period] = [amounts, dates]
     end
+        
     respond_with do 
       json hash.to_json
     end
@@ -64,7 +73,10 @@ class ApiController < ApplicationController
 
   def upload
     content = params.files["csv"].file.gets_to_end
-    CSVJob.dispatch(content, @u)
+    @u.try do |u|
+      Repo.delete_all(Record, Query.where(user_id: u.id))
+      CSVJob.dispatch(content, u)
+    end
   end
 end
 
