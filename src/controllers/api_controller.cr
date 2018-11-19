@@ -21,7 +21,7 @@ class ApiController < ApplicationController
       username = params["username"]
       hash["token"] = "#{username};#{digest}"
     else
-      halt!(401, "Not authorized")
+      halt!(422, "Wrong credentials")
     end
     respond_with do
       json hash.to_json
@@ -37,7 +37,6 @@ class ApiController < ApplicationController
 
   def stats
     hash = {} of String => Array(String) | Array(Array(Float64) | Array(String)) | Array(String) | Record | Bool
-    #hash = JSON::Any.new
     DATES.each do |period|
       pr = Repo.all(Record, Query.where(period: period, user_id: @u.as(User).id))
       dates   = pr.map {|r| r.start_date.to_s}
@@ -51,7 +50,6 @@ class ApiController < ApplicationController
   end
 
   def register
-    puts "here"
     u = User.new
     u.password_enc = params["password"]
     u.email = params["email"]

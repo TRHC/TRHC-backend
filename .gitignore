@@ -11,5 +11,5 @@ production.yml
 /bin/
 /node_modules
 /db/database.db
-/db/bhota_bot_development.db
+/db/slib_development.db
 .tbot.yml
