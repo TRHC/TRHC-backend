@@ -42,6 +42,8 @@ class ApiController < ApplicationController
       dates   = pr.map {|r| r.start_date.to_s}
       amounts = pr.map {|r| r.amount.as(Float64)}
       hash[period] = [amounts, dates]
+
+      puts Repo.aggregate(Record, :sum, :amount, Query.where(period: period, user_id: @u.as(User).id))
     end
         
     respond_with do 
@@ -65,7 +67,9 @@ class ApiController < ApplicationController
         json hash.to_json
       end
     else
-      halt!(422, "Unprocessable entity")
+      respond_with do
+        json({success: false, errors: chset.errors}.to_json)
+      end
     end
   end
 

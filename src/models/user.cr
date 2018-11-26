@@ -12,7 +12,7 @@ class User < Crecto::Model
 
   validates [:name, :surname, :username, :email], 
     presence: true,
-    length: {min: 2, max: 20}
+    length: {min: 2, max: 35}
 
 
   unique_constraint [:username, :phone, :email]

@@ -19,7 +19,7 @@ Amber::Server.configure do
     plug Amber::Pipe::Session.new
     hosts = [] of String | Regex
     hosts.push("*")
-    headers = %w(Accept Origin Connection Content-Type Authorization DNT User-Agent Referer Accept-Encoding Accept-Language Cookie)
+    headers = %w(Accept Origin Connection Content-Type Authorization DNT User-Agent Referer Accept-Encoding Access-Control-Request-Origin Accept-Language Cookie)
     plug Amber::Pipe::CORS.new(origins: hosts, methods: %w(GET POST PUT PATCH DELETE), headers: headers)
   end
 
