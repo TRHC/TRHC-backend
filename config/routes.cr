@@ -1,9 +1,6 @@
 Amber::Server.configure do
   pipeline :web do
-    # Plug is the method to use connect a pipe (middleware)
-    # A plug accepts an instance of HTTP::Handler
     plug Amber::Pipe::PoweredByAmber.new
-    # plug Amber::Pipe::ClientIp.new(["X-Forwarded-For"])
     plug Citrine::I18n::Handler.new
     plug Amber::Pipe::Error.new
     plug Amber::Pipe::Logger.new
@@ -34,16 +31,15 @@ Amber::Server.configure do
   end
 
   routes :api, "/api" do
-    post "/auth", ApiController, :auth
-    post "/register", ApiController, :register
-    get "/info", ApiController, :info
-    post "/upload", ApiController, :upload
-    get "/stats", ApiController, :stats
+    post "/auth",     UserController, :auth
+    post "/register", UserController, :register
+    get  "/info",     UserController, :info
+
+    post "/upload", StatsController, :upload
+    get "/stats",   StatsController, :stats
   end
 
   routes :static do
-    # Each route is defined as follow
-    # verb resource : String, controller : Symbol, action : Symbol
     get "/*", Amber::Controller::Static, :index
   end
 end
