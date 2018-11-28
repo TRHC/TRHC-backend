@@ -14,7 +14,7 @@ class User < Crecto::Model
     presence: true,
     length: {min: 2, max: 35}
 
-
+  validate_format :email, /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   unique_constraint [:username, :phone, :email]
 
   def password_enc=(password)
