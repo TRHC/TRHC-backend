@@ -23,7 +23,7 @@ class StatsController < ApplicationController
     end
 
 
-    pr = Record.filter_records(@u.as(User), "day", after_date, before_date)
+    pr = Record.filter_records(@u.as(User), period, after_date, before_date)
     dates   = pr.map {|r| r.start_date.to_s}
     amounts = pr.map {|r| r.amount.as(Float64)}
 
