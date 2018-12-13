@@ -45,10 +45,10 @@ class StatsController < ApplicationController
 
         json.field "statistics" do
           json.object do
-            json.field "avgHour", tHour / qHour
-            json.field "avgDay", tDay / qDay
-            json.field "avgMonth", tMonth / qMonth
-            json.field "total", tDay
+            json.field "avgHour", (tHour / qHour).round(2)
+            json.field "avgDay", (tDay / qDay).round(2)
+            json.field "avgMonth", (tMonth / qMonth).round(2)
+            json.field "total", tDay.round(2)
           end
         end
       end
