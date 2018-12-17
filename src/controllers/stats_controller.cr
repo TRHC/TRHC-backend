@@ -24,7 +24,17 @@ class StatsController < ApplicationController
 
 
     pr = Record.filter_records(@u.as(User), period, after_date, before_date)
-    dates   = pr.map {|r| r.start_date.to_s}
+    dates   = pr.map do |r| 
+      d = r.start_date.as(Time).to_local
+      case period
+      when "month"
+        d.to_s("%Y-%m")
+      when "day"
+        d.to_s("%m-%d")
+      when "hour"
+        d.to_s("%m-%d %H:00")
+      end
+    end
     amounts = pr.map {|r| r.amount.as(Float64)}
 
     res = JSON.build do |json|
@@ -48,6 +58,9 @@ class StatsController < ApplicationController
             json.field "avgHour", (tHour / qHour).round(2)
             json.field "avgDay", (tDay / qDay).round(2)
             json.field "avgMonth", (tMonth / qMonth).round(2)
+            json.field "qMonth", qMonth
+            json.field "qDay", qDay
+            json.field "qHour", qHour
             json.field "total", tDay.round(2)
           end
         end
