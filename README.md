@@ -34,5 +34,4 @@ Using Docker? Please check [Amber Docker guides](https://docs.amberframework.org
 ## Contributors
 
 - [grig191](https://github.com/grig191) Grig Betsan - creator, maintainer
-- [2uo](https://github.com/2uo) - 2uo team
 
