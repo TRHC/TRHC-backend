@@ -35,8 +35,12 @@ Amber::Server.configure do
     post "/register", UserController, :register
     get  "/info",     UserController, :info
 
-    post "/upload", StatsController, :upload
-    get "/stats",   StatsController, :stats
+    get   "/stats",   StatsController, :stats
+    get "/collect", StatsController, :collect
+
+    post "/new",     DeviceController, :new
+    post "/delete_device", DeviceController, :delete_device
+    get  "/devices", DeviceController, :devices
   end
 
   routes :static do

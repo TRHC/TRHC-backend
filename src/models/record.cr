@@ -1,56 +1,48 @@
 class Record < Crecto::Model
   schema "records" do
-    belongs_to :user, User
-    field :amount, Float64
-    field :unit, String
-    field :period, String
-    field :start_date, Time
+    belongs_to :device, Device
+    field :rh, Float64
+    field :tc, Float64
   end
 
-  def self.filter_records(user : User, period : String, after_date : String, before_date : String)
+  validates [:rh, :tc],
+    presence: true
+
+  def self.filter_records(device : Device, after_date : String, before_date : String)
     Repo.all(Record, 
         Query.where(
-          period: period, 
-          user_id: user.id
+          device_id: device.id
           ).where(
-            "records.start_date > ?", after_date
+            "records.created_at > ?", after_date
           ).where(
-            "records.start_date < ?", before_date
+            "records.created_at < ?", before_date
           )
       )
   end 
 
-  def self.last_date(user : User)
+  def self.last_date(device : Device)
     Repo.all(Record, 
-      Query.select(["start_date"]
-      ).where(user_id: user.id
-      ).order_by("start_date DESC"
+      Query.select(["created_at"]
+      ).where(device_id: device.id
+      ).order_by("created_at DESC"
       ).limit(1)
-    )[0].start_date
+    )[0].created_at
   end
 
-  def self.first_date(user : User)
+  def self.first_date(device : Device)
     Repo.all(Record, 
-      Query.select(["start_date"]
-      ).where(user_id: user.id
-      ).order_by("start_date ASC"
+      Query.select(["created_at"]
+      ).where(device_id: device.id
+      ).order_by("created_at ASC"
       ).limit(1)
-    )[0].start_date
+    )[0].created_at
   end
 
-  def self.empty_by(u : User)
-    Repo.all(Record, Query.where(user_id: u.id)).empty?
+  def self.empty_by(u : Device)
+    Repo.all(Record, Query.where(device_id: u.id)).empty?
   end
-
-  def self.total(u : User)
-    ["hour", "day", "month"].map do |period| 
-      Repo.aggregate(Record, :sum, :amount, Query.where(period: period, user_id: u.id)).to_s.to_f
-    end
-  end
-
-  def self.counts(u : User)
-    ["hour", "day", "month"].map do |period| 
-      Repo.aggregate(Record, :count, :id, Query.where(period: period, user_id: u.id)).to_s.to_i
-    end
+  
+  def self.counts(u : Device)
+    Repo.aggregate(Record, :count, :id, Query.where(device_id: u.id)).to_s.to_i
   end
 end

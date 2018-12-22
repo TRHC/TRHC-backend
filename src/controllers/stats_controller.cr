@@ -1,86 +1,56 @@
 class StatsController < ApplicationController
-  DATES = ["month", "day", "hour"]
-
   def stats
     u = @u.as(User)
-    halt!(422) if Record.empty_by(u)
+    d = Repo.get_by!(Device, uuid: params[:uuid]).as(Device)
+    s = Repo.all(Record, Query.where(device_id: d.id))
 
-    after_date  = date_params["after_date"]
-    before_date = date_params["before_date"]
-    period      = date_params["period"]
+    halt!(422) if Record.empty_by(d)
 
-    last_date = Record.last_date(u)
-    first_date = Record.first_date(u)
+    last_date = Record.last_date(d)
+    first_date = Record.first_date(d)
 
-    qHour, qDay, qMonth = Record.counts(u)
-    tHour, tDay, tMonth = Record.total(u)
-
-
-    if after_date == "start" && before_date == "start"
-      before_date = last_date.to_s
-      after_date  = (last_date.as(Time) - 24.hours).to_s
-      period = "hour"
-    end
+    rhs = s.map {|r| r.rh}
+    tcs = s.map {|r| r.tc}
+    lbl = s.map {|r| r.created_at.to_s }
 
 
-    pr = Record.filter_records(@u.as(User), period, after_date, before_date)
-    dates   = pr.map do |r| 
-      d = r.start_date.as(Time).to_local
-      case period
-      when "month"
-        d.to_s("%Y-%m")
-      when "day"
-        d.to_s("%m-%d")
-      when "hour"
-        d.to_s("%m-%d %H:00")
-      end
-    end
-    amounts = pr.map {|r| r.amount.as(Float64)}
+    q = Record.counts(d)
 
     res = JSON.build do |json|
       json.object do
-        json.field "data" do 
-          json.object do
-            json.field "dates", dates
-            json.field "amounts", amounts
-          end
-        end
-
+        json.field "count", q
         json.field "range" do
           json.object do
             json.field "last_date", last_date
             json.field "first_date", first_date
           end
         end
-
-        json.field "statistics" do
+        json.field "data" do 
           json.object do
-            json.field "avgHour", (tHour / qHour).round(2)
-            json.field "avgDay", (tDay / qDay).round(2)
-            json.field "avgMonth", (tMonth / qMonth).round(2)
-            json.field "qMonth", qMonth
-            json.field "qDay", qDay
-            json.field "qHour", qHour
-            json.field "total", tDay.round(2)
+            json.field "tcs", tcs
+            json.field "rhs", rhs
+            json.field "lbl", lbl
           end
         end
       end
     end
   end
 
-  def upload
-    content = params.files["csv"].file.gets_to_end
-    @u.try do |u|
-      Repo.delete_all(Record, Query.where(user_id: u.id))
-      CSVJob.dispatch(content, u)
-    end
-  end
+  def collect
+    rh   = params[:rh].to_f64
+    tc   = params[:tc].to_f64
+    uuid = params[:uuid]
 
-  def date_params
-    params.validation do
-      required(:before_date) {|v| !v.empty?}
-      required(:after_date) {|v| !v.empty?}
-      optional(:period) {|v| !v.empty?}
+    d = Repo.get_by!(Device, uuid: uuid)
+
+    r = Record.new
+    r.tc = tc
+    r.rh = rh
+    r.device_id = d.id
+    Repo.insert(r)
+
+    respond_with do
+      json(r.to_json)
     end
   end
 end

@@ -1,5 +1,6 @@
 class User < Crecto::Model
   schema "users" do
+    has_many :devices, Device, dependent: :destroy
     field :name, String
     field :surname, String
     field :username, String

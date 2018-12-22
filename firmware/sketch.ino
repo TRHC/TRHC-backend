@@ -18,9 +18,9 @@ const char* VERSION  = "0.0.1";
 const char* SSID     = "IDDQD";
 const char* PASSWORD = "0RT0zQgfObk4";
 
-const char* HOST  = "192.168.1.105";
+const char* HOST  = "192.168.1.106";
 const int   PORT  = 3000;
-const char* KEY   = "ABCDEFGh123";
+const char* KEY   = "de41cdd4-df60-4522-95ae-ba9042ff8773";
 const int   DELAY = 5000;
 
 
@@ -147,8 +147,8 @@ void netRequest(float tc, float rh) {
   }
 
   // We now create a URI for the request
-  String url = "/api/info";
-  url += "?pkey=";
+  String url = "/api/collect";
+  url += "?uuid=";
   url += KEY;
   url += "&tc=";
   url += tc;
@@ -161,6 +161,7 @@ void netRequest(float tc, float rh) {
   // This will send the request to the server
   client.print(String("GET ") + url + " HTTP/1.1\r\n" +
                "Host: " + HOST + "\r\n" +
+               "Origin: " + "http://localhost:8080/" + "\r\n" +
                "Connection: close\r\n\r\n");
   unsigned long timeout = millis();
   while (client.available() == 0) {
